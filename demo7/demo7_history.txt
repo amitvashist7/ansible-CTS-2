@@ -1,0 +1,31 @@
+    1  ls
+    2  ansible 172.31.0.10 -u root -k -m command -a 'df -h'
+    3  ansible 172.31.0.10 -u root -k -m command -a 'uname -a '
+    4  vi inventory 
+    5  ansible 172.31.0.10 -m command -a 'uname -a'
+    6  ansible 172.31.0.10 -m command -a 'ip addr'
+    7  cat /etc/redhat-release 
+    8  ansible 172.31.0.10 -m command -a 'cat /etc/redhat-release'
+    9  ansible prod -m command -a 'cat /etc/redhat-release'
+   10  cat /etc/*-release 
+   11  ansible 172.31.0.10 -m command -a 'cat /etc/*-release'
+   12  cat /etc/*-release 
+   13  ansible 172.31.0.10 -m command -a "cat /etc/*-release"
+   14  ansible 172.31.0.10 -m command -a 'cat /etc/`*`-release'
+   15  ansible 172.31.0.10 -m shell -a 'cat /etc/*-release'
+   16  ansible 172.31.0.10 -m setup
+   17  ls
+   18  ansible 172.31.0.10 -m setup -a "filter=ansible_eth*"
+   19  ansible 172.31.0.10 -m setup -a "filter=ansible_mount*"
+   20  ansible 172.31.0.10 -m setup -a "filter=ansible_all_ipv4_addresses"
+   21  ansible 172.31.0.10 -m setup -a "filter=ansible_os_family"
+   22  ansible all -m setup --tree ./setup
+   23  ls
+   24  cd setup/
+   25  ls
+   26  cat 172.31.0.10 
+   27  cat 172.31.0.16
+   28  ls
+   29  cd ..
+   30  ls
+   31  history > demo6_history.txt 
