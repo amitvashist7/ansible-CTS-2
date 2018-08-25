@@ -1,0 +1,17 @@
+172.31.0.[10:15]
+
+[web]
+172.31.0.11
+
+[db]
+172.31.0.12
+
+[datacenter-west:children]
+web
+db
+
+
+
+[datacenter-west:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=redhat
