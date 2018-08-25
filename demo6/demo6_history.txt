@@ -1,0 +1,36 @@
+    1  cd demo6/
+    2  ls
+    3  cat ansible.cfg 
+    4  ls
+    5  cat inventory 
+    6  vim inventory 
+    7  ansible all -u root -k -m ping 
+    8  vim inventory 
+    9  ansible all -u root -k -m ping 
+   10  ls
+   11  ansible web -u root -k -m ping 
+   12  cat inventory 
+   13  ansible web -u root -k -m ping 
+   14  cat ansible.cfg 
+   15  vim ansible.cfg 
+   16  ansible web -u root -k -m ping 
+   17  ansible all -u root -k -m ping 
+   18  ansible prod -u root -k -m ping 
+   19  cat inventory 
+   20  vi inventory 
+   21  ansible prod -u root -k -m ping 
+   22  cat inventory 
+   23  ansible prod -u root -k -m service -a "name=httpd state=started" 
+   24  ansible 'web:&prod' -u root -k -m service -a "name=httpd state=started" 
+   25  ansible 'web:prod' -u root -k -m service -a "name=httpd state=started" 
+   26  ls
+   27  ansible 'web:&test' -u root -k -m service -a "name=httpd state=started" 
+   28  cat inventory 
+   29  ansible 'web:&uat' -u root -k -m service -a "name=httpd state=started" 
+   30  vim inventory 
+   31  ansible 'db:&prod' -u root -k -m ping 
+   32  ansible 'db:&prod:&python3' -u root -k -m ping 
+   33  ansible 'db:&prod:!python3' -u root -k -m ping 
+   34  ls
+   35  mv demo5_history.txt demo6_history.txt 
+   36  history > demo6_history.txt 
