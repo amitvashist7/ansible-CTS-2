@@ -1,0 +1,45 @@
+---
+- hosts: web:prod
+  vars: 
+    http_port: 80
+    doc_root: /var/www/html/ansible-site
+    doc_dir: /ansible-site/
+
+  vars_prompt: 
+  - name: username
+    prompt: How is managing the webserver ?
+  
+  tasks: 
+  - debug: msg="WebSever is managed by{{username}}"
+  
+  - name: Install Apache Pkg. on RedHat Family
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+    
+  - name: Install Apache Pkg. on Debain Family
+    apt: name=apache2 state=present
+    when: ansible_os_family == "Debain"
+
+  - name: Start the Apache Service
+    service: name=httpd state=started enabled=True
+ 
+  - name: Create Site Location
+    file: path={{doc_root}} state=directory  
+
+  - name: Deploy Apache Configuration.
+    template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+    notify:
+      - Restart Apache
+
+  - name: Deploy Index Template Site File
+    template: src=templates/index.j2 dest={{doc_root}}/index.html
+ 
+  - name: Deploy Index Static Site File
+    copy: src=templates/index.j2 dest={{doc_root}}/static.html
+
+  - name: Deploy Info Dynamic Site File
+    template: src=templates/info.j2 dest={{doc_root}}/info.html
+  
+  handlers:
+  - name: Restart Apache
+    service: name=httpd state=restarted enabled=True
