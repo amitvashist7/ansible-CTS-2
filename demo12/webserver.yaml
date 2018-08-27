@@ -1,0 +1,5 @@
+---
+- hosts: web:prod
+  roles: 
+  - apache
+  - firewall
