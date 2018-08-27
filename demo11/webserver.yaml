@@ -2,15 +2,15 @@
 - hosts: web:prod
   vars: 
     http_port: 80
-    doc_root: /var/www/html/ansible-site
-    doc_dir: /ansible-site/
+    doc_root: /var/www/html/ansible-site2
+    doc_dir: /ansible-site2/
 
   vars_prompt: 
   - name: username
     prompt: How is managing the webserver ?
   
   tasks: 
-  - debug: msg="WebSever is managed by{{username}}"
+  - debug: msg="{{username}}"
   
   - name: Install Apache Pkg. on RedHat Family
     yum: name=httpd state=present
@@ -23,8 +23,17 @@
   - name: Start the Apache Service
     service: name=httpd state=started enabled=True
  
-  - name: Create Site Location
+  - name: Check the Document Root
+    command: ls {{doc_root}}
+    register: result1
+    ignore_errors: yes 
+
+  - debug: msg="Warning - Mentioned Document Root Doesn't exits."
+    when: result1|failed
+
+  - name: Now Creating Missing Site Location
     file: path={{doc_root}} state=directory  
+    when: result1|failed
 
   - name: Deploy Apache Configuration.
     template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
