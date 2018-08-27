@@ -1,0 +1,10 @@
+---
+- hosts: web
+  sudo: yes
+
+  tasks: 
+  - name: Install Apache Pkg.
+    yum: name=httpd state=present
+
+  - name: Start the Apache Service
+    service: name=httpd state=started enabled=True

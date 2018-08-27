@@ -1,0 +1,7 @@
+---
+- hosts: all:!db
+  sudo: yes
+
+  tasks: 
+  - name: Stop the Firewalld Service
+    service: name=firewalld state=stopped enabled=False
