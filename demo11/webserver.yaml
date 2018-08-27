@@ -2,8 +2,8 @@
 - hosts: web:prod
   vars: 
     http_port: 80
-    doc_root: /var/www/html/ansible-site2
-    doc_dir: /ansible-site2/
+    doc_root: /var/www/html/ansible-site6
+    doc_dir: /ansible-site6/
 
   vars_prompt: 
   - name: username
@@ -28,7 +28,7 @@
     register: result1
     ignore_errors: yes 
 
-  - debug: msg="Warning - Mentioned Document Root Doesn't exits."
+  - debug: msg="Warning \:\ Mentioned Document Root Doesn't exits."
     when: result1|failed
 
   - name: Now Creating Missing Site Location
@@ -38,7 +38,11 @@
   - name: Deploy Apache Configuration.
     template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
     notify:
-      - Restart Apache
+      - Restart Apache-1
+      - update
+
+  - name: Meta Force to Flush Handkers
+    meta: flush_handlers
 
   - name: Deploy Index Template Site File
     template: src=templates/index.j2 dest={{doc_root}}/index.html
@@ -48,7 +52,20 @@
 
   - name: Deploy Info Dynamic Site File
     template: src=templates/info.j2 dest={{doc_root}}/info.html
+    notify:
+      - Restart Apache-2
+
+  - name: Local Action 
+    local_action: shell echo "Welcome to the Ansible Deployment on" {{ inventory_hostname }} >> /root/local_action.txt
   
+  - name: Remote Action on Host "172.31.0.11"
+    shell: echo "Welcome to the Ansible Deployment on" {{ inventory_hostname }} >> /tmp/remote_action.txt
+    delegate_to: "172.31.0.11"
+
   handlers:
-  - name: Restart Apache
+  - name: Restart Apache-1
     service: name=httpd state=restarted enabled=True
+  - name: Restart Apache-2
+    service: name=httpd state=restarted enabled=True
+  - name: update
+    shell: '/bin/echo "Hello Update Handler" > {{doc_root}}/abc.html' 
