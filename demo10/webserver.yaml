@@ -1,0 +1,36 @@
+---
+- hosts: web
+  vars: 
+    http_port: 80
+    doc_root: /var/www/html/test-2
+    doc_dir: /test-2/
+  
+  tasks: 
+  - name: Install Apache Pkg. on RedHat Family
+    yum: name=httpd state=present
+    when: ansible_os_family == "RedHat"
+    
+  - name: Install Apache Pkg. on Debain Family
+    apt: name=apache2 state=present
+    when: ansible_os_family == "Debain"
+
+  - name: Deploy Apache Configuration.
+    template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+    notify:
+      - Restart Apache
+
+  - name: Start the Apache Service
+    service: name=httpd state=started enabled=True
+ 
+  - name: Create Site Location
+    file: path={{doc_root}} state=directory  
+
+  - name: Deploy Index Template Site File
+    template: src=templates/index.j2 dest={{doc_root}}/index.html
+ 
+  - name: Deploy Index Static Site File
+    copy: src=templates/index.j2 dest={{doc_root}}/static.html
+
+  handlers:
+  - name: Restart Apache
+    service: name=httpd state=restarted enabled=True

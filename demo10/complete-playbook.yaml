@@ -1,0 +1,21 @@
+---
+- hosts: web
+  tasks: 
+  - name: Install Apache Pkg.
+    yum: name=httpd state=present
+
+  - name: Start the Apache Service
+    service: name=httpd state=started enabled=True
+
+- hosts: db
+  tasks: 
+  - name: Install MariaDB Pkg.
+    yum: name=mariadb-server state=present
+
+  - name: Start the Apache Service
+    service: name=mariadb state=started enabled=True
+
+- hosts: all:!db
+  tasks: 
+  - name: Stop the Firewalld Service
+    service: name=firewalld state=stopped enabled=False
