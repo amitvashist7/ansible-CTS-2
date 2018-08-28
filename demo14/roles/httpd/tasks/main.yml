@@ -1,0 +1,7 @@
+---
+# tasks file for apache
+- include: set_fact.yaml
+- include: package.yaml
+- include: service.yaml
+- include: httpd-conf-deplyment.yaml
+- include: site-deployment.yaml
