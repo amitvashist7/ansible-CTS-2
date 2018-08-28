@@ -1,6 +1,6 @@
 ---
 - name: Create Common Users
-  user: name={{ item }} password={{ansible_user_password_vault}}
+  user: name={{ item }} password={{user_password_vault}}
 
   with_items: 
     - amit 
