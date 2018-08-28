@@ -1,0 +1,4 @@
+---
+- hosts: web:prod
+  roles: 
+  - apache
