@@ -1,0 +1,6 @@
+---
+# vars file for server-common
+#
+#
+
+ansible_user_password_vault: "$1$bcfaP9Uw$aC6F1LAKbFCoU2NuPFIti1"
