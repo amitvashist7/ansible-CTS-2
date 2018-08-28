@@ -1,0 +1,9 @@
+---
+- hosts: prod:&web
+  roles: 
+  - apache
+
+
+- hosts: prod:&db
+  roles: 
+  - mariadb
