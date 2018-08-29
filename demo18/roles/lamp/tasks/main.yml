@@ -1,0 +1,19 @@
+---
+# tasks file for lamp
+#
+
+- name: Create DIR to Download WP
+  command: mkdir -p /opt/source/wordpress
+
+- name: Download WordPress
+  get_url: url=https://wordpress.org/latest.tar.gz  dest=/opt/source/wordpress/wordpress.tar.gz
+
+- name: Deploy the OLD httpd Configuration
+  copy: src=templates/httpd.conf.org dest=/etc/httpd/conf/httpd.conf
+  notify: Apache Restart
+
+- name: Extract Wordpress
+  command: "tar zxf /opt/source/wordpress/wordpress.tar.gz -C /var/www/html/ --strip-components 1"
+
+- name: Setting UP Config
+  template: src=templates/wp-config-sample.php.j2 dest=/var/www/html/wp-config.php mode=0644
