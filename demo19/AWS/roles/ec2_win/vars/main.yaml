@@ -7,6 +7,6 @@ ec2:
   subnet: subnet-e18f1489
   public_ip: yes
   user_data: user_data/winrm.txt
-  count: 2
+  count: 1
   tags:
-    Name: EC2_Ansible
+    Name: Win_Ansible
