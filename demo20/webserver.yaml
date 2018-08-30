@@ -1,9 +1,4 @@
 ---
 - hosts: datacenter-west
-  pre_tasks: 
-  - include: set_fact.yaml
   roles: 
-    - role: apache
-      when: ansible_os_family == "Debain" 
     - role: httpd
-      when: ansible_os_family == "RedHat" 
