@@ -1,7 +1,7 @@
 ec2:
   region: ap-south-1
   credentials: my-aws-ssh-key
-  image: ami-0bee97edb48c1f93f 
+  image: ami-04c342a3b8070ffa1 
   instance_type: t2.micro 
   sg: ansiblewinSG
   subnet: subnet-e18f1489
